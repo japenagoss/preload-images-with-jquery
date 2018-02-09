@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                var images = [
+                    "https://s3-us-west-2.amazonaws.com/fotomanager-bucket/1501484363.JPG",
+                    "https://s3-us-west-2.amazonaws.com/fotomanager-bucket/2017_0731_065501.JPG"
+                ];
+
+                var counter = 0;
+
+                $(document).click(function(){
+                    loadImage(images[counter]);
+                });
+
+                function loadImage(url){
+                    var img = $('<img />').attr('src', url)
+                    .on('load', function() {
+                        if(!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                            console.log('broken image!');
+                        } else {
+                            if(counter < 2){
+                                loadImage(images[counter++]);
+                            }
+                        }
+                    });
+                }
+
+                $("#image").click(function(){
+                    $(this).html("<img src='https://s3-us-west-2.amazonaws.com/fotomanager-bucket/2017_0731_065501.JPG'>");
+                });
+
+            });
+        </script>
+        <style>
+            #image{
+                width:100px;
+                height: 100px;
+                border: solid red 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="image">
+        </div>
+    </body>
+</html>
